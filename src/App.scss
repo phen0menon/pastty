@@ -1,0 +1,27 @@
+body {
+  min-height: 100vh;
+}
+.chat-module {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.no-front-margins {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.no-front-paddings {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.chat-sidebar {
+  background: #663c3c;
+  color: #fff;
+  padding: 30px;
+
+  .chat-sidebar-inner {
+    height: 100%;
+    // border: 1px solid #ccc;
+  }
+}
