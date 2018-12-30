@@ -15,13 +15,13 @@ class Navbar extends Component {
           <div className="collapse navbar-collapse" id="main_navbar">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active ml-2">
-                <Link to="/" className="btn btn-primary">New Paste</Link>
+                <Link to="/" className="btn btn-primary"><i class="fas fa-plus-circle"></i> New</Link>
               </li>
               <li className="nav-item ml-2">
-                <button className="btn btn-success">Save (Ctrl + S)</button>
+                <button className="btn btn-success"><i class="fas fa-save"></i> Save (Ctrl + S)</button>
               </li>
               <li className="nav-item ml-2">
-                <button className="btn btn-warning">Share</button>
+                <button className="btn btn-warning"><i class="fas fa-share-square"></i> Share</button>
               </li>
               <li className="nav-item ml-2">
                 <SelectSyntax />

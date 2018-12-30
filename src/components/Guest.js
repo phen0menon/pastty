@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AceEditor from 'react-ace';
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
+import SelectSyntax from '../widgets/SelectSyntax'
 
 const initialState = {
   editor_value: '// Enter your code here\n',
@@ -30,23 +31,26 @@ class App extends Component {
             let type = editor.getSession().getMode().$id.split('/')[2];
 
             var payload = {
-              "name": "Zхрень какая-то",
+              "name": "Test Paste",
               "code": code,
-              "description": "empty",
+              "description": "Test Description",
               "type": type,
               "codeType": "snippet",
             }
 
-            fetch("http://sn.a6raywa1cher.com:9000/script", {
+            var settings = {
               method: "PUT",
               body: JSON.stringify(payload),
-              headers: {
-                "ContentType": "application/json"
-              }
-            })
+              headers: { "ContentType": "application/json" }
+            }
+
+            fetch("http://sn.a6raywa1cher.com:9000/script", settings)
             .then((res) => res.json())
             .then((res) => {
-              currentScope.setState({ status: null, redirect_link: res.shortname })
+              currentScope.setState({
+                status: null,
+                redirect_link: res.shortname
+              })
             })
           })
         } else {
@@ -71,7 +75,6 @@ class App extends Component {
     return(
       <div className="row col-12 main-module no-front-margins no-front-paddings">
         <div className="row col-12 no-front-margins no-front-paddings">
-
           <div className="chat-module col-10 no-front-paddings">
             <AceEditor
               mode="java"
