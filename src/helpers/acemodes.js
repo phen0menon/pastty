@@ -1,7 +1,3 @@
-/*
-cmd to reproduce: ls node_modules/brace/mode/ | awk '{split($9, s, "."); print "import \"brace/mode/"s[1]"\";"}'
-*/
-import 'brace/mode/assembly_x86';
 import 'brace/mode/batchfile';
 import 'brace/mode/c_cpp';
 import 'brace/mode/clojure';

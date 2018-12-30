@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import brace from 'brace';
+import AceEditor from 'react-ace';
 
 import '../helpers/acemodes'
 import 'brace/theme/xcode';
@@ -17,9 +19,9 @@ export default class SelectSyntax extends Component {
     handleSelect(event) {
         this.setState({ syntax: event.target.value }, () => {
             this.setEditorSyntax(this.state.syntax);
-        })     
+        })
     }
-    setEditorSyntax(lang) {        
+    setEditorSyntax(lang) {
         var editor = window.ace.edit('paste')
         editor.getSession().setMode('ace/mode/' + lang)
     }
