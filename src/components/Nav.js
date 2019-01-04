@@ -90,14 +90,16 @@ class Navbar extends Component {
               </li>
             </ul>
           </div>
-          <div className="my-2 my-lg-0">
-            <button
-              className="btn btn-outline-success my-2 my-sm-0"
-              type="submit"
+
+            <a
+              href="https://github.com/phen0menon/pastty"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline-secondary my-2 my-sm-0"
             >
-              GitHub
-            </button>
-          </div>
+              <i className="fab fa-github" /> GitHub
+            </a>
+
         </nav>
       </div>
     );
