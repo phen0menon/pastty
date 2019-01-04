@@ -34,7 +34,7 @@ export const createPaste = (payload, history) => dispatch => {
     headers: { ContentType: "application/json" }
   };
 
-  fetch("https://sn.a6raywa1cher.com:9000/script", settings)
+  fetch("https://sn.a6raywa1cher.com/api/script", settings)
     .then(res => res.json())
     .then(res => {
       const pasteLink = res.shortname;
@@ -47,7 +47,7 @@ export const createPaste = (payload, history) => dispatch => {
 export const fetchPaste = (payload, history) => dispatch => {
   dispatch({ type: FETCH_PASTE });
 
-  const url = "https://sn.a6raywa1cher.com:9000/script/" + payload;
+  const url = "https://sn.a6raywa1cher.com/api/script/" + payload;
 
   fetch(url, { method: "GET" })
     .then(response => {
