@@ -41,8 +41,8 @@ class Navbar extends Component {
   }
   render() {
     return (
-      <div className="header-module col-12 no-front-paddings bg-light">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="header-module col-12 no-front-paddings">
+        <nav className="navbar navbar-expand-lg navbar-dark">
           <Link to="/" className="navbar-brand">
             Pastty
           </Link>
@@ -91,15 +91,14 @@ class Navbar extends Component {
             </ul>
           </div>
 
-            <a
-              href="https://github.com/phen0menon/pastty"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline-secondary my-2 my-sm-0"
-            >
-              <i className="fab fa-github" /> GitHub
-            </a>
-
+          <a
+            href="https://github.com/phen0menon/pastty"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline-secondary my-2 my-sm-0"
+          >
+            <i className="fab fa-github" /> GitHub
+          </a>
         </nav>
       </div>
     );

@@ -5,6 +5,7 @@ import { updateGuestPaste, createPaste } from "../actions/guestActions";
 import { editorProps } from "../helpers/editorProps";
 import { withRouter } from "react-router";
 import { isNotEmpty } from "../helpers/validate";
+import { enableLiveAutocompletion } from "brace/ext/language_tools";
 
 class Editor extends Component {
   constructor(props) {

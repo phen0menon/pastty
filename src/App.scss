@@ -75,7 +75,7 @@ body {
 
 .header-module {
   height: 60px;
-  background: #1c2128;
+  background: #20262e;
   box-shadow: 0 0 5px rgba(28, 33, 40, 0);
   position: relative;
   z-index: 100;
@@ -83,5 +83,10 @@ body {
 
   .navbar {
     // height: 60px;
+    background: #20262e;
   }
+}
+.ace-dracula .ace_print-margin {
+  width: 1px;
+  background: #1b1e30 !important;
 }

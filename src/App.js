@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from "./components/Nav";
 import Editor from "./components/Editor";
 import Paste from "./components/Paste";
+
+import "./helpers/acemodes";
+import "brace/theme/dracula";
+
 import "./App.scss";
 
 class App extends Component {

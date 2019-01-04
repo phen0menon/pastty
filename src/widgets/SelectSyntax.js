@@ -3,9 +3,6 @@ import AceEditor from "react-ace";
 import { connect } from "react-redux";
 import { updateGuestSyntax } from "../actions/guestActions";
 
-import "../helpers/acemodes";
-import "brace/theme/xcode";
-
 class SelectSyntax extends Component {
   constructor(props) {
     super(props);
