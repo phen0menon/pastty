@@ -1,1 +1,1 @@
-export const currentDomain = "http://localhost:3000/";
+export const currentDomain = "https://sn.a6raywa1cher.com/";
