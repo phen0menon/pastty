@@ -6,6 +6,7 @@ import store from "./store";
 
 import App from "./App";
 import "./index.css";
+import * as serviceWorker from "./serviceWorker";
 
 const rootEl = document.getElementById("root");
 
@@ -17,6 +18,8 @@ const render = () => {
     rootEl
   );
 }
+
+serviceWorker.register();
 
 if (
   'fetch' in window &&
