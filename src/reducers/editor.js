@@ -1,6 +1,8 @@
 import Actions from "actions/";
 
-const initialEditorValue = "// Enter your code here\n";
+const initialEditorValue = localStorage.getItem("editorValue")
+  ? localStorage.getItem("editorValue")
+  : "// Enter your code here";
 
 const initialState = {
   previousEditorValue: initialEditorValue,
@@ -16,6 +18,8 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case Actions.UPDATE_GUEST_PASTE: {
+      localStorage.setItem("editorValue", action.payload);
+
       return { ...state, editorValue: action.payload };
     }
 
@@ -63,11 +67,11 @@ export default function(state = initialState, action) {
     }
 
     case Actions.FETCH_PASTE_FAIL: {
-      return initialState
+      return initialState;
     }
 
     case Actions.SET_STATUS_TO_GUEST: {
-      return initialState
+      return initialState;
     }
 
     case Actions.FORK_PASTE: {
