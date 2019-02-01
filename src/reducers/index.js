@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import guestReducer from "./guestReducer";
+import editorReducer from "./editor";
 
 export default combineReducers({
-  guest: guestReducer
+  guest: editorReducer
 });

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import AceEditor from "react-ace";
 import { connect } from "react-redux";
-import { fetchPaste } from "../actions/guestActions";
-import { editorPropsPaste } from "../helpers/editorProps";
+import { fetchPaste } from "actions/editor";
+import { editorPropsPaste } from "helpers/editorProps";
 import { withRouter } from "react-router";
-import { currentDomain } from "../helpers/constants";
+import { currentDomain } from "helpers/constants";
 import Swal from "sweetalert2";
 import * as moment from "moment";
+import "brace/mode/java";
 
 class Paste extends Component {
   getPaste = id => {
@@ -49,11 +50,13 @@ class Paste extends Component {
     this.configureEditor();
   }
   render() {
+    const { editorSyntax: mode } = this.props;
     var _editorPropsPaste = Object.assign({}, editorPropsPaste, {
       onChange: value => this.props.setEditorValue(value),
       value: this.props.editorValue,
       defaultValue: this.props.editorValue
     });
+    if (mode) _editorPropsPaste = { ..._editorPropsPaste, mode };
 
     return (
       <div className="w-100">

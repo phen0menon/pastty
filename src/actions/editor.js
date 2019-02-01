@@ -7,10 +7,11 @@ export const updateGuestPaste = editorValue => dispatch => {
   });
 };
 
-export const updateGuestSyntax = editorSyntax => dispatch => {
+export const updateGuestSyntax = (syntax, callback) => dispatch => {
   dispatch({
     type: Actions.UPDATE_GUEST_SYNTAX,
-    payload: editorSyntax
+    payload: syntax,
+    callback
   });
 };
 

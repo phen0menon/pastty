@@ -1,32 +1,40 @@
 import React, { Component } from "react";
 import AceEditor from "react-ace";
 import { connect } from "react-redux";
-import { updateGuestPaste, createPaste } from "../actions/guestActions";
-import { updateGuestSyntax } from "../actions/guestActions";
-import { editorProps } from "../helpers/editorProps";
+import {
+  updateGuestPaste,
+  createPaste,
+  updateGuestSyntax
+} from "actions/editor";
+import { editorProps } from "helpers/editorProps";
+import { isNotEmpty } from "helpers/validate";
 import { withRouter } from "react-router";
-import { isNotEmpty } from "../helpers/validate";
 import { enableLiveAutocompletion } from "brace/ext/language_tools";
+import "brace/mode/java";
 
 class Editor extends Component {
   pasteHandler = () => {
-    if (!isNotEmpty(this.props.editorValue)) return;
+    const {
+      editorStatus,
+      editorValue,
+      previousEditorValue,
+      editorSyntax
+    } = this.props;
 
     if (
-      this.props.editorStatus === "initial" &&
-      this.props.editorValue !== this.props.previousEditorValue
-    ) {
-      const { editorValue, editorSyntax } = this.props;
+      !isNotEmpty(editorValue) ||
+      (editorStatus !== "initial" && editorValue !== previousEditorValue)
+    )
+      return;
 
-      const payload = {
-        name: "Test Paste",
-        code: editorValue,
-        description: "Test",
-        type: editorSyntax,
-        codeType: "snippet"
-      };
-      this.props.createPaste(payload, this.props.history);
-    }
+    const payload = {
+      name: "Test Paste",
+      code: editorValue,
+      description: "Test",
+      type: editorSyntax,
+      codeType: "snippet"
+    };
+    this.props.createPaste(payload, this.props.history);
   };
 
   configureEditor = () => {
@@ -57,11 +65,15 @@ class Editor extends Component {
   }
 
   render() {
-    var _editorProps = Object.assign({}, editorProps, {
-      onChange: value => this.props.setEditorValue(value),
-      value: this.props.editorValue,
-      defaultValue: this.props.editorValue
+    const { editorValue, editorSyntax: mode } = this.props;
+
+    let _editorProps = Object.assign({}, editorProps, {
+      onChange: eValue => this.props.setEditorValue(eValue),
+      value: editorValue,
+      defaultValue: editorValue
     });
+
+    if (mode) _editorProps = { ..._editorProps, mode };
 
     return (
       <div

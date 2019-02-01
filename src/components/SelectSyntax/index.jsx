@@ -1,22 +1,22 @@
 import React, { Component } from "react";
 import AceEditor from "react-ace";
 import { connect } from "react-redux";
-import { updateGuestSyntax } from "../actions/guestActions";
+import { updateGuestSyntax } from "actions/editor";
 
 class SelectSyntax extends Component {
   handleSelect = event => {
     const selectedSyntax = event.target.value;
 
-    if (selectedSyntax) {
-      import(`brace/mode/${selectedSyntax}`).then(() => {
-        this.props.setEditorSyntax(selectedSyntax);
+    // if (!selectedSyntax || selectedSyntax === "null") return;
 
+    this.props.setEditorSyntax(selectedSyntax, () => {
+      import(`brace/mode/${selectedSyntax}`).then(() => {
         window.ace
           .edit("paste")
           .getSession()
           .setMode("ace/mode/" + selectedSyntax);
       });
-    }
+    });
   };
   render() {
     return (
@@ -25,9 +25,6 @@ class SelectSyntax extends Component {
         className="form-control"
         onChange={this.handleSelect}
       >
-        <option value="null" default>
-          Select
-        </option>
         <option value="java">Java 8</option>
         <option value="c_cpp">C / C++</option>
         <option value="javascript">JavaScript</option>
@@ -49,7 +46,8 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setEditorSyntax: editorSyntax => dispatch(updateGuestSyntax(editorSyntax))
+    setEditorSyntax: (syntax, callback) =>
+      dispatch(updateGuestSyntax(syntax, callback))
   };
 };
 

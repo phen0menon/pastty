@@ -1,22 +1,13 @@
 import React, { Component } from "react";
-import SelectSyntax from "../widgets/SelectSyntax";
+import SelectSyntax from "components/SelectSyntax";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  createPaste,
-  setStatusToGuest,
-  forkPaste
-} from "../actions/guestActions";
+import { createPaste, setStatusToGuest, forkPaste } from "actions/editor";
 import { withRouter } from "react-router";
-import { isNotEmpty } from "../helpers/validate";
+import { isNotEmpty } from "helpers/validate";
 
 class Navbar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.createAndSavePaste = this.createAndSavePaste.bind(this);
-  }
-  createAndSavePaste() {
+  createAndSavePaste = () => {
     let {
       editorValue,
       editorStatus,
@@ -38,7 +29,7 @@ class Navbar extends Component {
     } else {
       this.props.forkPaste(this.props.history);
     }
-  }
+  };
   render() {
     return (
       <div className="header-module col-12 no-front-paddings">
