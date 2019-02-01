@@ -4,21 +4,20 @@ import { connect } from "react-redux";
 import { updateGuestSyntax } from "../actions/guestActions";
 
 class SelectSyntax extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleSelect = this.handleSelect.bind(this);
-  }
-  handleSelect(event) {
+  handleSelect = event => {
     const selectedSyntax = event.target.value;
 
-    this.props.setEditorSyntax(selectedSyntax);
+    if (selectedSyntax) {
+      import(`brace/mode/${selectedSyntax}`).then(() => {
+        this.props.setEditorSyntax(selectedSyntax);
 
-    window.ace
-      .edit("paste")
-      .getSession()
-      .setMode("ace/mode/" + selectedSyntax);
-  }
+        window.ace
+          .edit("paste")
+          .getSession()
+          .setMode("ace/mode/" + selectedSyntax);
+      });
+    }
+  };
   render() {
     return (
       <select
@@ -26,6 +25,9 @@ class SelectSyntax extends Component {
         className="form-control"
         onChange={this.handleSelect}
       >
+        <option value="null" default>
+          Select
+        </option>
         <option value="java">Java 8</option>
         <option value="c_cpp">C / C++</option>
         <option value="javascript">JavaScript</option>

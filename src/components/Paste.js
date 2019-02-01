@@ -5,29 +5,54 @@ import { fetchPaste } from "../actions/guestActions";
 import { editorPropsPaste } from "../helpers/editorProps";
 import { withRouter } from "react-router";
 import { currentDomain } from "../helpers/constants";
+import Swal from "sweetalert2";
 import * as moment from "moment";
 
 class Paste extends Component {
-  componentDidMount() {
-    this.props.fetchPaste(this.props.match.params.paste, this.props.history);
+  getPaste = id => {
+    const callbackSuccess = syntax => {
+      import(`brace/mode/${syntax}`).then(() => {
+        window.ace
+          .edit("paste")
+          .getSession()
+          .setMode("ace/mode/" + syntax);
+      });
+    };
+    const callbackError = () => {
+      Swal({
+        type: "error",
+        title: "Ошибка!",
+        text:
+          "Вы получили это сообщение, потому что перешли по несуществующей ссылке!",
+        footer: ""
+      });
+    };
 
+    this.props.fetchPaste(
+      id,
+      this.props.history,
+      callbackSuccess,
+      callbackError
+    );
+  };
+
+  configureEditor = () => {
     const editor = window.ace.edit("paste");
 
     editor.renderer.setScrollMargin(3, 3);
-    editor.setOptions({
-      readOnly: true,
-      highlightActiveLine: false,
-      highlightGutterLine: false
-    });
     editor.renderer.$cursorLayer.element.style.display = "none";
     editor.getSession().setUseWorker(false);
+  };
+
+  componentDidMount() {
+    this.getPaste(this.props.match.params.paste);
+    this.configureEditor();
   }
   render() {
     var _editorPropsPaste = Object.assign({}, editorPropsPaste, {
       onChange: value => this.props.setEditorValue(value),
       value: this.props.editorValue,
-      defaultValue: this.props.editorValue,
-      mode: this.props.editorSyntax
+      defaultValue: this.props.editorValue
     });
 
     return (
@@ -86,15 +111,9 @@ const mapStateToProps = store => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchPaste: (payload, history) => dispatch(fetchPaste(payload, history))
-  };
-};
-
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    { fetchPaste }
   )(Paste)
 );

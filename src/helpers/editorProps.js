@@ -8,6 +8,7 @@ export const editorProps = {
   name: "paste",
   editorProps: { $blockScrolling: true },
   enableLiveAutocompletion: true,
+  useWorker: false
 };
 
 export const editorPropsPaste = Object.assign({}, editorProps, {

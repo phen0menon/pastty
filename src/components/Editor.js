@@ -2,17 +2,14 @@ import React, { Component } from "react";
 import AceEditor from "react-ace";
 import { connect } from "react-redux";
 import { updateGuestPaste, createPaste } from "../actions/guestActions";
+import { updateGuestSyntax } from "../actions/guestActions";
 import { editorProps } from "../helpers/editorProps";
 import { withRouter } from "react-router";
 import { isNotEmpty } from "../helpers/validate";
 import { enableLiveAutocompletion } from "brace/ext/language_tools";
 
 class Editor extends Component {
-  constructor(props) {
-    super(props);
-    this.pasteHandler = this.pasteHandler.bind(this);
-  }
-  pasteHandler() {
+  pasteHandler = () => {
     if (!isNotEmpty(this.props.editorValue)) return;
 
     if (
@@ -20,6 +17,7 @@ class Editor extends Component {
       this.props.editorValue !== this.props.previousEditorValue
     ) {
       const { editorValue, editorSyntax } = this.props;
+
       const payload = {
         name: "Test Paste",
         code: editorValue,
@@ -29,17 +27,18 @@ class Editor extends Component {
       };
       this.props.createPaste(payload, this.props.history);
     }
-  }
-  componentDidMount() {
-    const _this = this;
+  };
+
+  configureEditor = () => {
     const editor = window.ace.edit("paste");
 
+    editor.getSession().setUseWorker(false);
     editor.renderer.setScrollMargin(3, 3);
     editor.commands.addCommand({
       name: "Save (update) paste",
       bindKey: { win: "Ctrl-s", mac: "Command-s" },
-      exec: function(editor) {
-        _this.pasteHandler();
+      exec: editor => {
+        this.pasteHandler();
       }
     });
 
@@ -51,14 +50,17 @@ class Editor extends Component {
         .split("\n").length
     );
     editor.navigateFileEnd();
+  };
+
+  componentDidMount() {
+    this.configureEditor();
   }
 
   render() {
     var _editorProps = Object.assign({}, editorProps, {
       onChange: value => this.props.setEditorValue(value),
       value: this.props.editorValue,
-      defaultValue: this.props.editorValue,
-      mode: this.props.editorSyntax
+      defaultValue: this.props.editorValue
     });
 
     return (
@@ -98,7 +100,8 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return {
     setEditorValue: editorValue => dispatch(updateGuestPaste(editorValue)),
-    createPaste: (payload, history) => dispatch(createPaste(payload, history))
+    createPaste: (payload, history) => dispatch(createPaste(payload, history)),
+    setEditorSyntax: editorSyntax => dispatch(updateGuestSyntax(editorSyntax))
   };
 };
 

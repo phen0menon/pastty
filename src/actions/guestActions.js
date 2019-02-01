@@ -1,32 +1,21 @@
-import {
-  UPDATE_GUEST_PASTE,
-  UPDATE_GUEST_SYNTAX,
-  CREATE_PASTE,
-  CREATE_PASTE_SUCCESS,
-  FETCH_PASTE,
-  FETCH_PASTE_SUCCESS,
-  FETCH_PASTE_FAIL,
-  SET_STATUS_TO_GUEST,
-  FORK_PASTE
-} from "./types";
-import Swal from "sweetalert2";
+import Actions from "./index";
 
 export const updateGuestPaste = editorValue => dispatch => {
   dispatch({
-    type: UPDATE_GUEST_PASTE,
+    type: Actions.UPDATE_GUEST_PASTE,
     payload: editorValue
   });
 };
 
 export const updateGuestSyntax = editorSyntax => dispatch => {
   dispatch({
-    type: UPDATE_GUEST_SYNTAX,
+    type: Actions.UPDATE_GUEST_SYNTAX,
     payload: editorSyntax
   });
 };
 
 export const createPaste = (payload, history) => dispatch => {
-  dispatch({ type: CREATE_PASTE });
+  dispatch({ type: Actions.CREATE_PASTE });
 
   const settings = {
     method: "PUT",
@@ -39,13 +28,18 @@ export const createPaste = (payload, history) => dispatch => {
     .then(res => {
       const pasteLink = res.shortname;
 
-      dispatch({ type: CREATE_PASTE_SUCCESS });
+      dispatch({ type: Actions.CREATE_PASTE_SUCCESS });
       history.push("/" + pasteLink);
     });
 };
 
-export const fetchPaste = (payload, history) => dispatch => {
-  dispatch({ type: FETCH_PASTE });
+export const fetchPaste = (
+  payload,
+  history,
+  callbackSuccess,
+  callbackError
+) => dispatch => {
+  dispatch({ type: Actions.FETCH_PASTE });
 
   const url = "https://sn.a6raywa1cher.com/api/script/" + payload;
 
@@ -55,32 +49,27 @@ export const fetchPaste = (payload, history) => dispatch => {
     })
     .then(data => {
       dispatch({
-        type: FETCH_PASTE_SUCCESS,
-        payload: data
+        type: Actions.FETCH_PASTE_SUCCESS,
+        payload: data,
+        callback: callbackSuccess
       });
     })
     .catch(err => {
-      dispatch({ type: FETCH_PASTE_FAIL });
-      Swal({
-        type: "error",
-        title: "Ошибка!",
-        text:
-          "Вы получили это сообщение, потому что перешли по несуществующей ссылке!",
-        footer: ""
-      });
+      dispatch({ type: Actions.FETCH_PASTE_FAIL });
+      callbackError();
       history.push("/");
     });
 };
 
 export const setStatusToGuest = () => dispatch => {
   dispatch({
-    type: SET_STATUS_TO_GUEST
+    type: Actions.SET_STATUS_TO_GUEST
   });
 };
 
 export const forkPaste = history => dispatch => {
   dispatch({
-    type: FORK_PASTE
+    type: Actions.FORK_PASTE
   });
 
   history.push("/");
