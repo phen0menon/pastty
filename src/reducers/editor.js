@@ -1,12 +1,13 @@
 import Actions from "actions/";
 
-const initialEditorValue = localStorage.getItem("editorValue")
+const initialEditorValue = "// Enter your code here\n";
+const editorValue = localStorage.getItem("editorValue")
   ? localStorage.getItem("editorValue")
-  : "// Enter your code here";
+  : initialEditorValue;
 
 const initialState = {
-  previousEditorValue: initialEditorValue,
-  editorValue: initialEditorValue,
+  previousEditorValue: editorValue,
+  editorValue: editorValue,
   editorSyntax: "java",
   editorStatus: "initial",
   editorDescription: null,
@@ -44,6 +45,13 @@ export default function(state = initialState, action) {
       };
     }
 
+    case Actions.CREATE_PASTE_FAIL: {
+      return {
+        ...state,
+        editorStatus: "initial"
+      };
+    }
+
     case Actions.FETCH_PASTE: {
       return { ...state, editorStatus: "loading" };
     }
@@ -71,7 +79,8 @@ export default function(state = initialState, action) {
     }
 
     case Actions.SET_STATUS_TO_GUEST: {
-      return initialState;
+      localStorage.clear();
+      return { ...initialState, editorValue: initialEditorValue };
     }
 
     case Actions.FORK_PASTE: {

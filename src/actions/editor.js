@@ -31,6 +31,9 @@ export const createPaste = (payload, history) => dispatch => {
 
       dispatch({ type: Actions.CREATE_PASTE_SUCCESS });
       history.push("/" + pasteLink);
+    })
+    .catch(res => {
+      dispatch({ type: Actions.CREATE_PASTE_FAIL });
     });
 };
 
@@ -43,9 +46,14 @@ export const fetchPaste = (
   dispatch({ type: Actions.FETCH_PASTE });
 
   const url = "https://sn.a6raywa1cher.com/api/script/" + payload;
+  let status = 0;
 
   fetch(url, { method: "GET" })
     .then(response => {
+      if (response.status === 404) {
+        callbackError();
+      }
+
       return response.json();
     })
     .then(data => {
@@ -57,7 +65,6 @@ export const fetchPaste = (
     })
     .catch(err => {
       dispatch({ type: Actions.FETCH_PASTE_FAIL });
-      callbackError();
       history.push("/");
     });
 };
