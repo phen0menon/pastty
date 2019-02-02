@@ -19,7 +19,7 @@ const render = () => {
   );
 }
 
-serviceWorker.register();
+serviceWorker.unregister();
 
 if (
   'fetch' in window &&
