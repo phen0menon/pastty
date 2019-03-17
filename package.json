@@ -30,7 +30,7 @@
     "identity-obj-proxy": "3.0.0",
     "intl": "^1.2.5",
     "mini-css-extract-plugin": "0.4.3",
-    "moment": "^2.23.0",
+    "moment": "^2.24.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
