@@ -11,10 +11,26 @@ body {
   }
 }
 
-@media screen and (min-width: 691px) {
+@media screen and (min-width: 577px) {
   .chat-module {
     margin-left: 210px;
   }
+}
+
+@media screen and (max-width: 576px) {
+  .navbar-nav {
+    width: 100%;
+
+    .syntax-select-item {
+      width: 100%;
+  
+      select.form-control {
+        width: unset;
+        float: right;
+      }
+    }
+  }
+  
 }
 
 @media screen and (max-width: 991px) {

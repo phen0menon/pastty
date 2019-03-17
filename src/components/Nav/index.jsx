@@ -33,33 +33,86 @@ class Navbar extends Component {
   render() {
     return (
       <div className="header-module col-12 no-front-paddings">
-        <nav className="navbar navbar-expand-lg navbar-dark">
-          <Link to="/" className="navbar-brand">
-            Pastty
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#main_navbar"
-            aria-controls="main_navbar"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
+        {/* <nav className="navbar navbar-expand-lg navbar-dark d-flex justify-content-between">
+          <div className="d-flex">
+            <Link to="/" className="navbar-brand d-flex">
+              Pastty
+            </Link>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#main_navbar"
+              aria-controls="main_navbar"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon" />
+            </button>
+
+            <div className="collapse navbar-collapse ml-4  d-flex" id="main_navbar">
+              <ul className="navbar-nav">
+                <li className="nav-item active ml-2">
+                  <Link
+                    to="/"
+                    className="btn btn-primary"
+                    onClick={() => this.props.setStatusToGuest()}
+                  >
+                    <i className="fas fa-plus-circle" /> New
+                  </Link>
+                </li>
+                <li className="nav-item ml-2">
+                  <button
+                    className="btn btn-success"
+                    onClick={this.createAndSavePaste}
+                  >
+                    {this.props.editorStatus === "paste" ? (
+                      <>
+                        <i className="fas fa-code-branch" /> Fork
+                      </>
+                    ) : (
+                      <>
+                        <i className="fas fa-save" /> Save
+                      </>
+                    )}
+                  </button>
+                </li>
+                <li className="nav-item ml-2">
+                  <SelectSyntax />
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <a
+              href="https://github.com/phen0menon/pastty"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline-secondary my-2 my-sm-0"
+            >
+              <i className="fab fa-github" /> GitHub
+            </a>
+          </div>
+        </nav> */}
+
+        <nav class="navbar navbar-expand navbar-dark bg-dark py-20">
+          <a class="navbar-brand  d-none d-sm-block" href="#">Pastty</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collapse navbar-collapse" id="main_navbar">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item active ml-2">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-sm-auto">
+              <li class="nav-item active">
                 <Link
                   to="/"
                   className="btn btn-primary"
                   onClick={() => this.props.setStatusToGuest()}
                 >
                   <i className="fas fa-plus-circle" /> New
-                </Link>
-              </li>
+                  </Link>      </li>
+
               <li className="nav-item ml-2">
                 <button
                   className="btn btn-success"
@@ -68,28 +121,31 @@ class Navbar extends Component {
                   {this.props.editorStatus === "paste" ? (
                     <>
                       <i className="fas fa-code-branch" /> Fork
-                    </>
+                      </>
                   ) : (
-                    <>
-                      <i className="fas fa-save" /> Save
-                    </>
-                  )}
+                      <>
+                        <i className="fas fa-save" /> Save
+                      </>
+                    )}
                 </button>
               </li>
-              <li className="nav-item ml-2">
+              <li className="nav-item ml-2 syntax-select-item">
                 <SelectSyntax />
               </li>
             </ul>
+            <div class="col-sm-20 d-none d-sm-block">
+              <form class="form-inline my-2 my-lg-0 ">
+                <a
+                  href="https://github.com/phen0menon/pastty"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline-secondary my-2 my-sm-0"
+                >
+                  <i className="fab fa-github" /> GitHub
+            </a>
+              </form>
+            </div>
           </div>
-
-          <a
-            href="https://github.com/phen0menon/pastty"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-outline-secondary my-2 my-sm-0"
-          >
-            <i className="fab fa-github" /> GitHub
-          </a>
         </nav>
       </div>
     );

@@ -10,6 +10,11 @@ import * as moment from "moment";
 import "brace/mode/java";
 
 class Paste extends Component {
+  constructor(props) {
+    super(props);
+
+    this.fieldToCopy = React.createRef();
+  }
   getPaste = id => {
     const callbackSuccess = syntax => {
       import(`brace/mode/${syntax}`).then(() => {
@@ -49,6 +54,14 @@ class Paste extends Component {
     this.getPaste(this.props.match.params.paste);
     this.configureEditor();
   }
+
+  copyField = (e) => {
+    this.fieldToCopy.current.select();
+    document.execCommand('copy');
+    e.target.focus();
+    console.log('copied!')
+  };
+
   render() {
     const { editorSyntax: mode } = this.props;
     var _editorPropsPaste = Object.assign({}, editorPropsPaste, {
@@ -58,9 +71,11 @@ class Paste extends Component {
     });
     if (mode) _editorPropsPaste = { ..._editorPropsPaste, mode };
 
+    console.log(this.props.valueToConsole)
+
     return (
       <div className="w-100">
-        <div className="chat-sidebar d-none d-md-block">
+        <div className="chat-sidebar d-none d-sm-block">
           <div className="chat-sidebar-inner">
             <div className="paste-info">
               <div className="form-group">
@@ -82,9 +97,10 @@ class Paste extends Component {
                 <label className="undertitle">Link</label>
                 <input
                   className="form-control"
-                  onFocus={event => event.target.select()}
+                  onClick={this.copyField}
                   readOnly={true}
                   value={currentDomain + this.props.match.params.paste}
+                  ref={this.fieldToCopy}
                 />
               </div>
             </div>
@@ -107,10 +123,11 @@ const mapStateToProps = store => {
     editorStatus: store.guest.editorStatus,
     editorDescription: store.guest.editorDescription,
     pasteTimeCreated: moment
-      .utc(store.guest.pasteTimeCreated)
+      .utc(new Date(store.guest.pasteTimeCreated))
       .local()
-      .format("LLL"),
-    pasteAuthor: store.guest.pasteAuthor
+      .format("LL HH:mm"),
+    pasteAuthor: store.guest.pasteAuthor,
+    valueToConsole: store.guest.pasteTimeCreated
   };
 };
 
