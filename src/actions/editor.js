@@ -16,12 +16,16 @@ export const updateGuestSyntax = (syntax, callback) => dispatch => {
 };
 
 export const createPaste = (payload, history) => dispatch => {
-  dispatch({ type: Actions.CREATE_PASTE });
+  dispatch({
+    type: Actions.CREATE_PASTE
+  });
 
   const settings = {
     method: "PUT",
     body: JSON.stringify(payload),
-    headers: { ContentType: "application/json" }
+    headers: {
+      ContentType: "application/json"
+    }
   };
 
   fetch("https://sn.a6raywa1cher.com/api/script", settings)
@@ -29,11 +33,15 @@ export const createPaste = (payload, history) => dispatch => {
     .then(res => {
       const pasteLink = res.shortname;
 
-      dispatch({ type: Actions.CREATE_PASTE_SUCCESS });
+      dispatch({
+        type: Actions.CREATE_PASTE_SUCCESS
+      });
       history.push("/" + pasteLink);
     })
     .catch(res => {
-      dispatch({ type: Actions.CREATE_PASTE_FAIL });
+      dispatch({
+        type: Actions.CREATE_PASTE_FAIL
+      });
     });
 };
 
@@ -43,12 +51,16 @@ export const fetchPaste = (
   callbackSuccess,
   callbackError
 ) => dispatch => {
-  dispatch({ type: Actions.FETCH_PASTE });
+  dispatch({
+    type: Actions.FETCH_PASTE
+  });
 
   const url = "https://sn.a6raywa1cher.com/api/script/" + payload;
   let status = 0;
 
-  fetch(url, { method: "GET" })
+  fetch(url, {
+      method: "GET"
+    })
     .then(response => {
       if (response.status === 404) {
         callbackError();
@@ -64,7 +76,9 @@ export const fetchPaste = (
       });
     })
     .catch(err => {
-      dispatch({ type: Actions.FETCH_PASTE_FAIL });
+      dispatch({
+        type: Actions.FETCH_PASTE_FAIL
+      });
       history.push("/");
     });
 };

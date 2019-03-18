@@ -70,7 +70,9 @@ export default function(state = initialState, action) {
         editorSyntax: action.payload.type,
         editorDescription: action.payload.description,
         pasteTimeCreated: action.payload.timeOfCreation,
-        pasteAuthor: action.payload.author
+        pasteAuthor: action.payload.author,
+        pasteViews: action.payload.views
+        // принцип около того? да! все, теперь мы имеем доступ к просмотрам
       };
     }
 

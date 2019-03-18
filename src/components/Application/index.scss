@@ -6,13 +6,19 @@ body {
   position: relative;
   height: 100%;
 
+  @media screen and (min-width: 577px) {
+    &.chat-module-paste {
+      margin-left: 210px;
+    }
+  }
+
   .chat-module-inner {
     height: calc(100vh - 60px);
   }
 }
 
-@media screen and (min-width: 577px) {
-  .chat-module {
+@media screen and (min-width: 768px) {
+  .chat-module:not(.chat-module-paste) {
     margin-left: 210px;
   }
 }
@@ -90,7 +96,6 @@ body {
 }
 
 .header-module {
-  height: 60px;
   background: #20262e;
   box-shadow: 0 0 5px rgba(28, 33, 40, 0);
   position: relative;

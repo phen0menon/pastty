@@ -2,15 +2,37 @@ import React, { Component } from "react";
 import AceEditor from "react-ace";
 import { connect } from "react-redux";
 import { updateGuestSyntax } from "actions/editor";
+import { sortByKey } from "helpers/functions"
+import Select from "react-select"
+import './index.scss'
+
+const editorModes = [
+  { value: 'java', label: 'Java 8' },
+  { value: 'c_cpp', label: 'C / C++' },
+  { value: 'javascript', label: 'JavaScript' },
+  { value: 'kotlin', label: 'Kotlin' },
+  { value: 'golang', label: 'Golang' },
+  { value: 'python', label: 'Python' },
+  { value: 'rust', label: 'Rust' },
+  { value: 'typescript', label: 'TypeScript' },
+  { value: 'perl', label: 'Perl' },
+  { value: 'ruby', label: 'Ruby' },
+  { value: 'swift', label: 'Swift' },
+  { value: 'sql', label: 'SQL' },
+  { value: 'plaintext', label: 'Plain Text' }
+]
 
 class SelectSyntax extends Component {
-  handleSelect = event => {
-    const selectedSyntax = event.target.value;
+  state = {
+    currentMode: editorModes[0],
+  }
+  handleSelect = select => {
+    const { value : selectedSyntax } = select;
+    this.setState({ currentMode: select })
 
-    // if (!selectedSyntax || selectedSyntax === "null") return;
-
-    this.props.setEditorSyntax(selectedSyntax, () => {
+    this.props.setEditorSyntax(selectedSyntax, () => { 
       import(`brace/mode/${selectedSyntax}`).then(() => {
+
         window.ace
           .edit("paste")
           .getSession()
@@ -20,22 +42,22 @@ class SelectSyntax extends Component {
   };
   render() {
     return (
-      <select
-        value={this.props.editorSyntax}
-        className="form-control"
+      <Select 
+        value={this.state.currentMode}
         onChange={this.handleSelect}
-      >
-        <option value="java">Java 8</option>
-        <option value="c_cpp">C / C++</option>
-        <option value="javascript">JavaScript</option>
-        <option value="kotlin">Kotlin</option>
-        <option value="golang">Golang</option>
-        <option value="python">Python</option>
-        <option value="rust">Rust</option>
-        <option value="typescript">TypeScript</option>
-      </select>
+        options={editorModes}
+        styles={selectStyles}
+        placeholder="Syntax"
+        />
     );
   }
+}
+
+const placeholderStyle = () => ({ width: 69 })
+const selectStyles = {
+  singleValue: placeholderStyle,
+  placeholder: placeholderStyle,
+  option: (provided, state) => ({ ...provided, paddingTop: 4, paddingBottom: 4  })
 }
 
 const mapStateToProps = store => {
