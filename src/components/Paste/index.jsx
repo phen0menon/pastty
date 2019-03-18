@@ -103,10 +103,15 @@ class Paste extends Component {
                   ref={this.fieldToCopy}
                 />
               </div>
+              <div className="form-group">
+                <label className="undertitle mb-0">Views</label>
+                <div>{this.props.pasteViews}</div>
+              </div>
+
             </div>
           </div>
         </div>
-        <div className="chat-module no-front-paddings">
+        <div className="chat-module no-front-paddings chat-module-paste">
           <div className="chat-module-inner">
             <AceEditor {..._editorPropsPaste} />
           </div>
@@ -117,17 +122,27 @@ class Paste extends Component {
 }
 
 const mapStateToProps = store => {
+  const {
+    editorValue,
+    editorSyntax,
+    editorStatus,
+    editorDescription,
+    pasteAuthor,
+    pasteViews
+  } = store.guest;
+
   return {
-    editorValue: store.guest.editorValue,
-    editorSyntax: store.guest.editorSyntax,
-    editorStatus: store.guest.editorStatus,
-    editorDescription: store.guest.editorDescription,
+    editorValue,
+    editorSyntax,
+    editorStatus,
+    editorDescription,
+    pasteViews,
+    pasteAuthor,
     pasteTimeCreated: moment
       .utc(new Date(store.guest.pasteTimeCreated))
       .local()
       .format("LL HH:mm"),
-    pasteAuthor: store.guest.pasteAuthor,
-    valueToConsole: store.guest.pasteTimeCreated
+    valueToConsole: store.guest.pasteTimeCreated,
   };
 };
 
