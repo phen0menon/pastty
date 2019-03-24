@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import AceEditor from "react-ace";
 import { connect } from "react-redux";
 import { updateGuestSyntax } from "actions/editor";
-import { sortByKey } from "helpers/functions"
 import Select from "react-select"
 import './index.scss'
+import { throws } from "assert";
 
 const editorModes = [
   { value: 'java', label: 'Java 8' },
@@ -24,7 +24,17 @@ const editorModes = [
 
 class SelectSyntax extends Component {
   state = {
-    currentMode: editorModes[0],
+    currentMode: {
+      value: null,
+      label: null
+    }
+  }
+  componentWillReceiveProps(nextProps){
+    if (this.state.currentMode.value !== nextProps.editorSyntax){
+      this.setState({
+        currentMode: editorModes.find(e => e.value === nextProps.editorSyntax)
+      })
+    }
   }
   handleSelect = select => {
     const { value : selectedSyntax } = select;
@@ -53,7 +63,7 @@ class SelectSyntax extends Component {
   }
 }
 
-const placeholderStyle = () => ({ width: 69 })
+const placeholderStyle = () => ({ width: 70 })
 const selectStyles = {
   singleValue: placeholderStyle,
   placeholder: placeholderStyle,
@@ -72,7 +82,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(updateGuestSyntax(syntax, callback))
   };
 };
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
