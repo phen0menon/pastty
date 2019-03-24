@@ -8,6 +8,7 @@ import { currentDomain } from "helpers/constants";
 import Swal from "sweetalert2";
 import * as moment from "moment";
 import "brace/mode/java";
+// import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 
 class Paste extends Component {
   constructor(props) {
@@ -137,7 +138,7 @@ const mapStateToProps = store => {
     editorStatus,
     editorDescription,
     pasteViews,
-    pasteAuthor,
+    pasteAuthor, 
     pasteTimeCreated: moment
       .utc(new Date(store.guest.pasteTimeCreated))
       .local()
