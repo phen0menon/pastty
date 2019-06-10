@@ -1,2 +1,2 @@
-# Pastty
-### Frontend part of the Pastty project
+
+DEPRECATED: the app needs to rework so I abandon this repo.
